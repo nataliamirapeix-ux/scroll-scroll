@@ -359,6 +359,23 @@
     { id: 'd6', kind: 'link', author: 'daniel', created_at: '2026-10-18T16:42:00Z', url: 'https://www.are.na/natalia/scroll-scroll' },
   ];
 
+  // favicon: cuadrado negro que se llena de azul con el mismo guion nervioso que el logo (9 s por ciclo)
+  (() => {
+    const link = document.querySelector('link[rel=icon]');
+    if (!link || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const STEPS = [[0, 0], [5, 32], [6.5, 39], [11, 100], [20, 100], [21, 91], [24, 54], [27, 49], [31, 0], [58, 0], [59, 100], [70, 100], [71, 78], [73, 70], [76, 17], [78, 0], [86, 0], [87, 26], [89, 0], [100, 0]];
+    const CYCLE = 9000;
+    const icon = (pct) => 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#000"/><rect width="${(32 * pct / 100).toFixed(1)}" height="32" fill="#1876ff"/></svg>`);
+    let last = -1;
+    setInterval(() => {
+      if (document.hidden) return;
+      const t = (Date.now() % CYCLE) / CYCLE * 100;
+      let pct = 0;
+      for (const [at, v] of STEPS) { if (t >= at) pct = v; else break; }
+      if (pct !== last) { last = pct; link.href = icon(pct); }
+    }, 100);
+  })();
+
   // pie: el subrayado de marcador se dispara cuando el pie entra en pantalla
   const colophon = document.querySelector('.colophon');
   if (colophon) new IntersectionObserver((entries, obs) => {
