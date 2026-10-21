@@ -28,13 +28,10 @@
     set pass(v) { v ? localStorage.setItem('ss_pass', v) : localStorage.removeItem('ss_pass'); },
   };
 
-  // La barra de subir solo existe para quien ha entrado con contraseña.
-  // Para entrar: abrir la web con #subir (p. ej. scroll-scroll.com/#subir). Para salir: el enlace "salir" de la barra.
-  function canPost() { return !!store.pass || location.hash === '#subir'; }
+  // La barra de subir solo existe en /upload (scroll-scroll.com/upload). La portada siempre va limpia.
+  function canPost() { return /^\/upload\/?$/.test(location.pathname); }
   function applyMode() { document.body.classList.toggle('can-post', canPost()); }
   applyMode();
-  window.addEventListener('hashchange', applyMode);
-  $('lock').addEventListener('click', () => { store.pass = ''; history.replaceState(null, '', location.pathname); applyMode(); });
 
   let pendingFile = null;
   let oldest = null;

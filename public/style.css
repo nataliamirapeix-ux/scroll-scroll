@@ -240,16 +240,6 @@ button, input, textarea { font: inherit; color: inherit; }
 body.can-post .composer { display: block; }
 .item .meta .del { display: none; }
 body.can-post .item .meta .del { display: inline; }
-.composer .lock {
-  position: absolute;
-  right: var(--gutter);
-  top: 0.75rem;
-  background: none; border: 0; padding: 0;
-  color: var(--mute);
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
 .composer {
   position: fixed;
   left: 0; right: 0; bottom: 0;
