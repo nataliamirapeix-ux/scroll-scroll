@@ -1,4 +1,4 @@
-import { db, json, text, PAGE } from '../lib/common.js';
+import { db, json, text, fail, PAGE } from '../lib/common.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return text(res, 405, 'Solo GET');
@@ -19,7 +19,6 @@ export default async function handler(req, res) {
     res.setHeader('cache-control', 'no-store');
     return json(res, 200, { rows: data, count });
   } catch (err) {
-    console.error(err);
-    return text(res, 500, err.message || 'Error leyendo el feed');
+    return fail(res, err, 'Error leyendo el feed');
   }
 }

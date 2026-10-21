@@ -1,4 +1,4 @@
-import { db, json, text, onlyPost, requirePassword, BUCKET } from '../lib/common.js';
+import { db, json, text, fail, onlyPost, requirePassword, BUCKET } from '../lib/common.js';
 
 export default async function handler(req, res) {
   if (!onlyPost(req, res)) return;
@@ -21,7 +21,6 @@ export default async function handler(req, res) {
     if (error) throw error;
     return json(res, 200, { ok: true });
   } catch (err) {
-    console.error(err);
-    return text(res, 500, err.message || 'No se ha podido borrar');
+    return fail(res, err, 'No se ha podido borrar');
   }
 }

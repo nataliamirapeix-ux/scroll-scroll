@@ -1,4 +1,4 @@
-import { db, json, text } from '../lib/common.js';
+import { db, json, text, fail } from '../lib/common.js';
 
 // Lo llama la tarea programada de Vercel una vez al día.
 // Supabase pausa los proyectos gratuitos tras una semana sin actividad; esta consulta mínima lo evita.
@@ -9,7 +9,6 @@ export default async function handler(req, res) {
     res.setHeader('cache-control', 'no-store');
     return json(res, 200, { ok: true, count, at: new Date().toISOString() });
   } catch (err) {
-    console.error(err);
-    return text(res, 500, err.message || 'ping fallido');
+    return fail(res, err, 'ping fallido');
   }
 }

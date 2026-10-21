@@ -1,4 +1,4 @@
-import { db, json, text, onlyPost, requirePassword, AUTHORS, KINDS } from '../lib/common.js';
+import { db, json, text, fail, onlyPost, requirePassword, AUTHORS, KINDS } from '../lib/common.js';
 
 const MAX_BODY = 20000;
 
@@ -34,7 +34,6 @@ export default async function handler(req, res) {
     if (error) throw error;
     return json(res, 200, data);
   } catch (err) {
-    console.error(err);
-    return text(res, 500, err.message || 'No se ha podido guardar');
+    return fail(res, err, 'No se ha podido guardar');
   }
 }

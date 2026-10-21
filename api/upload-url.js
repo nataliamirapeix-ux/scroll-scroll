@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { db, json, text, onlyPost, requirePassword, publicUrl, BUCKET, MAX_FILE } from '../lib/common.js';
+import { db, json, text, fail, onlyPost, requirePassword, publicUrl, BUCKET, MAX_FILE } from '../lib/common.js';
 
 const ALLOWED = /^(image\/.+|video\/(mp4|webm|quicktime|x-m4v)|audio\/.+)$/;
 
@@ -20,7 +20,6 @@ export default async function handler(req, res) {
     if (error) throw error;
     return json(res, 200, { signedUrl: data.signedUrl, token: data.token, path, publicUrl: publicUrl(path) });
   } catch (err) {
-    console.error(err);
-    return text(res, 500, err.message || 'No se ha podido preparar la subida');
+    return fail(res, err, 'No se ha podido preparar la subida');
   }
 }
