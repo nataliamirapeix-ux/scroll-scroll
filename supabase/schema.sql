@@ -4,7 +4,7 @@
 create table if not exists public.posts (
   id          uuid primary key default gen_random_uuid(),
   created_at  timestamptz not null default now(),
-  author      text not null check (author in ('natalia', 'daniel')),
+  author      text not null check (author in ('natalia', 'daniel', 'natalia&daniel')),
   kind        text not null check (kind in ('text', 'link', 'image', 'video', 'audio')),
   body        text,
   url         text,
