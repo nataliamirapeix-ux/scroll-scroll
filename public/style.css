@@ -60,6 +60,46 @@ button, input, textarea { font: inherit; color: inherit; }
   pointer-events: none;
 }
 .corner a { pointer-events: auto; text-decoration: none; }
+
+/* logo: se selecciona y deselecciona solo, a trompicones, como un cursor nervioso */
+.wordmark {
+  position: relative;
+  display: inline-block;
+  padding: 0.15em 0.3em;
+  margin: -0.15em -0.3em;
+  white-space: nowrap;
+}
+.wordmark .sel {
+  position: absolute;
+  inset: 0;
+  padding: 0.15em 0.3em;
+  background: var(--blue);
+  color: #ffffff;
+  clip-path: inset(0 100% 0 0);
+  animation: select-jitter 9s steps(1, end) infinite;
+}
+@keyframes select-jitter {
+  0%    { clip-path: inset(0 100% 0 0); }
+  5%    { clip-path: inset(0 68% 0 0); }
+  6.5%  { clip-path: inset(0 61% 0 0); }
+  11%   { clip-path: inset(0 0% 0 0); }
+  20%   { clip-path: inset(0 0% 0 0); }
+  21%   { clip-path: inset(0 9% 0 0); }
+  24%   { clip-path: inset(0 46% 0 0); }
+  27%   { clip-path: inset(0 51% 0 0); }
+  31%   { clip-path: inset(0 100% 0 0); }
+  58%   { clip-path: inset(0 100% 0 0); }
+  59%   { clip-path: inset(0 0% 0 0); }
+  70%   { clip-path: inset(0 0% 0 0); }
+  71%   { clip-path: inset(0 22% 0 0); }
+  73%   { clip-path: inset(0 30% 0 0); }
+  76%   { clip-path: inset(0 83% 0 0); }
+  78%   { clip-path: inset(0 100% 0 0); }
+  86%   { clip-path: inset(0 100% 0 0); }
+  87%   { clip-path: inset(0 74% 0 0); }
+  89%   { clip-path: inset(0 100% 0 0); }
+  100%  { clip-path: inset(0 100% 0 0); }
+}
 .corner.tl { top: 0.9rem; left: var(--gutter); }
 .corner.tr { top: 0.9rem; right: var(--gutter); text-align: right; }
 .corner.ml { top: 50%; left: var(--gutter); transform: translateY(-50%); }
@@ -360,5 +400,6 @@ body.dragging .dropveil { display: grid; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
+  .wordmark .sel { animation: none; }
   .colophon .mark { background-size: 100% 100%; color: #ffffff; }
 }
