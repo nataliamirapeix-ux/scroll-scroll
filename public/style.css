@@ -100,7 +100,7 @@ button, input, textarea { font: inherit; color: inherit; }
   89%   { clip-path: inset(0 100% 0 0); }
   100%  { clip-path: inset(0 100% 0 0); }
 }
-.corner.tl { top: 0.9rem; left: var(--gutter); }
+.corner.tl { top: 0.75rem; left: var(--gutter); font-size: 1.36rem; max-width: none; }
 .corner.tr { top: 0.9rem; right: var(--gutter); text-align: right; }
 .corner.ml { top: 50%; left: var(--gutter); transform: translateY(-50%); }
 .corner.mr { top: 50%; right: var(--gutter); transform: translateY(-50%); text-align: right; }
