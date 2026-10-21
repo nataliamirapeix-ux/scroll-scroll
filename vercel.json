@@ -1,4 +1,7 @@
 {
+  "rewrites": [
+    { "source": "/upload", "destination": "/index.html" }
+  ],
   "crons": [
     { "path": "/api/ping", "schedule": "0 9 * * *" }
   ],
