@@ -1,0 +1,11 @@
+{
+  "name": "scroll-scroll",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Cajón de sastre de Natalia y Daniel",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0"
+  }
+}
