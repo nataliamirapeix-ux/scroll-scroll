@@ -28,6 +28,14 @@
     set pass(v) { v ? localStorage.setItem('ss_pass', v) : localStorage.removeItem('ss_pass'); },
   };
 
+  // La barra de subir solo existe para quien ha entrado con contraseña.
+  // Para entrar: abrir la web con #subir (p. ej. scroll-scroll.com/#subir). Para salir: el enlace "salir" de la barra.
+  function canPost() { return !!store.pass || location.hash === '#subir'; }
+  function applyMode() { document.body.classList.toggle('can-post', canPost()); }
+  applyMode();
+  window.addEventListener('hashchange', applyMode);
+  $('lock').addEventListener('click', () => { store.pass = ''; history.replaceState(null, '', location.pathname); applyMode(); });
+
   let pendingFile = null;
   let oldest = null;
   let exhausted = false;
@@ -218,10 +226,10 @@
     let pass = store.pass;
     if (!pass) { pass = await askPassword(); if (!pass) return null; }
     try {
-      return await fn(pass).then((r) => { store.pass = pass; return r; });
+      return await fn(pass).then((r) => { store.pass = pass; applyMode(); return r; });
     } catch (err) {
       if (err.status === 401) {
-        store.pass = '';
+        store.pass = ''; applyMode();
         setStatus('contraseña incorrecta', true);
         return withPassword(fn);
       }

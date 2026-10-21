@@ -35,8 +35,9 @@ body {
   font-family: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.4;
-  padding-bottom: calc(var(--composer) + env(safe-area-inset-bottom) + 4rem);
+  padding-bottom: 4rem;
 }
+body.can-post { padding-bottom: calc(var(--composer) + env(safe-area-inset-bottom) + 4rem); }
 a { color: inherit; }
 button, input, textarea { font: inherit; color: inherit; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -234,7 +235,21 @@ button, input, textarea { font: inherit; color: inherit; }
 .colophon.lit .mark:nth-of-type(3) { transition-delay: 700ms; }
 .colophon a.mark:hover, .colophon a.mark:focus-visible { background-image: linear-gradient(var(--ink), var(--ink)); color: var(--bg); outline: none; }
 
-/* caja de subida: una regla negra, un cuadrado azul */
+/* caja de subida: una regla negra, un cuadrado azul. Solo se ve con contraseña (body.can-post) */
+.composer { display: none; }
+body.can-post .composer { display: block; }
+.item .meta .del { display: none; }
+body.can-post .item .meta .del { display: inline; }
+.composer .lock {
+  position: absolute;
+  right: var(--gutter);
+  top: 0.75rem;
+  background: none; border: 0; padding: 0;
+  color: var(--mute);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
 .composer {
   position: fixed;
   left: 0; right: 0; bottom: 0;
