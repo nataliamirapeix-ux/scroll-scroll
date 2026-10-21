@@ -2,7 +2,7 @@
 (() => {
   const PAGE = 30;
   const MAX_FILE = 50 * 1024 * 1024; // límite del plan gratuito de Supabase
-  const AUTHORS = ['natalia', 'daniel'];
+  const AUTHORS = ['natalia', 'daniel', 'natalia&daniel'];
   // La frase que se repite en los márgenes. Cambiadla por la que queráis.
   const TAGLINE = 'todo lo que no cabe en ningún sitio';
 
@@ -293,7 +293,7 @@
   composer.addEventListener('submit', async (e) => {
     e.preventDefault();
     const author = who();
-    if (!author) { setStatus('elige quién sube: natalia o daniel', true); return; }
+    if (!author) { setStatus('elige quién sube: natalia, daniel o los dos', true); return; }
     const body = text.value.trim();
     if (!body && !pendingFile) return;
     if (demo) { setStatus('esto es la demo, no se sube nada', true); return; }
