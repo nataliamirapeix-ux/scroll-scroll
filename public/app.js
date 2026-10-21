@@ -4,7 +4,7 @@
   const MAX_FILE = 50 * 1024 * 1024; // límite del plan gratuito de Supabase
   const AUTHORS = ['natalia', 'daniel', 'natalia&daniel'];
   // La frase que se repite en los márgenes. Cambiadla por la que queráis.
-  const TAGLINE = 'la gente que no es espléndida con las ideas es porque tiene pocas';
+  const TAGLINE = 'Un medio para derrochar ideas. Nos lo podemos permitir.';
 
   const $ = (id) => document.getElementById(id);
   for (const n of document.querySelectorAll('[data-tagline]')) n.textContent = TAGLINE;
