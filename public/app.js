@@ -181,9 +181,61 @@
     f.appendChild(i);
     return f;
   }
+  // contador: el número fijo y la palabra escribiéndose con dudas, cambiando de sinónimo
+  const countN = el('span', 'n'); const countW = el('span', 'w'); const countC = el('span', 'caret');
+  countEl.replaceChildren(countN, document.createTextNode(' '), countW, countC);
   function updateCount() {
-    countEl.textContent = total ? `${total} ${total === 1 ? 'cosa' : 'cosas'}` : '';
+    countEl.hidden = !total;
+    countN.textContent = total ? String(total) : '';
   }
+  (() => {
+    const WORDS = ['cosas', 'objetos', 'artículos', 'movidas', 'artefactos', 'pensamientos', 'bártulos', 'asuntos', 'temas'];
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { countW.textContent = WORDS[0]; countC.remove(); return; }
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const show = (t) => { countW.textContent = t; };
+    async function typeWord(word) {
+      let cur = '';
+      const slip = Math.floor(rnd(2, word.length - 1));           // dónde duda
+      const wrong = Math.random() < 0.5 ? WORDS[Math.floor(Math.random() * WORDS.length)] : null; // a veces empieza otra palabra
+      if (wrong && wrong !== word) {
+        for (let i = 0; i < Math.min(3, wrong.length); i++) { cur = wrong.slice(0, i + 1); show(cur); await sleep(rnd(70, 150)); }
+        await sleep(rnd(250, 500));
+        while (cur.length) { cur = cur.slice(0, -1); show(cur); await sleep(rnd(35, 70)); }
+        await sleep(rnd(150, 300));
+      }
+      let slipped = false;
+      for (let i = 0; i < word.length; i++) {
+        cur = word.slice(0, i + 1); show(cur); await sleep(rnd(55, 140));
+        if (i === slip && !slipped) {
+          slipped = true;
+          await sleep(rnd(300, 600));
+          const back = Math.floor(rnd(1, 3));
+          for (let k = 0; k < back && cur.length; k++) { cur = cur.slice(0, -1); show(cur); await sleep(rnd(60, 110)); }
+          await sleep(rnd(200, 450));
+          i = cur.length - 1;
+        }
+      }
+    }
+    async function eraseWord(word) {
+      let cur = word;
+      const stop = Math.floor(rnd(1, word.length - 1));
+      while (cur.length > stop) { cur = cur.slice(0, -1); show(cur); await sleep(rnd(35, 70)); }
+      if (Math.random() < 0.6) { await sleep(rnd(200, 400)); cur = word.slice(0, cur.length + 1); show(cur); await sleep(rnd(200, 400)); } // se arrepiente un momento
+      while (cur.length) { cur = cur.slice(0, -1); show(cur); await sleep(rnd(30, 60)); }
+    }
+    (async () => {
+      let i = 0;
+      for (;;) {
+        const word = WORDS[i % WORDS.length];
+        await typeWord(word);
+        await sleep(rnd(2200, 3800));
+        await eraseWord(word);
+        await sleep(rnd(250, 700));
+        i++;
+      }
+    })();
+  })();
 
   /* ---------- feed ---------- */
   async function loadMore() {
