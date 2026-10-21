@@ -4,7 +4,7 @@
   const MAX_FILE = 50 * 1024 * 1024; // límite del plan gratuito de Supabase
   const AUTHORS = ['natalia', 'daniel', 'natalia&daniel'];
   // La frase que se repite en los márgenes. Cambiadla por la que queráis.
-  const TAGLINE = 'todo lo que no cabe en ningún sitio';
+  const TAGLINE = 'la gente que no es espléndida con las ideas es porque tiene pocas';
 
   const $ = (id) => document.getElementById(id);
   for (const n of document.querySelectorAll('[data-tagline]')) n.textContent = TAGLINE;
@@ -353,6 +353,12 @@
     { id: 'd5', kind: 'text', author: 'natalia', created_at: '2026-10-19T19:00:00Z', body: 'Apuntar aquí todo lo que no cabe en ningún sitio. Un cajón de sastre entre dos personas donde las cosas se acumulan sin orden y sin explicación, y donde el único criterio es que a uno de los dos le ha parecido que merecía quedarse. Esto es un ejemplo de texto largo para ver cómo se comporta la tipografía cuando hay más de un párrafo.\n\nSegundo párrafo, para probar.' },
     { id: 'd6', kind: 'link', author: 'daniel', created_at: '2026-10-18T16:42:00Z', url: 'https://www.are.na/natalia/scroll-scroll' },
   ];
+
+  // pie: el subrayado de marcador se dispara cuando el pie entra en pantalla
+  const colophon = document.querySelector('.colophon');
+  if (colophon) new IntersectionObserver((entries, obs) => {
+    if (entries.some((e) => e.isIntersecting)) { colophon.classList.add('lit'); obs.disconnect(); }
+  }, { threshold: 0.4 }).observe(colophon);
 
   refresh();
   loadMore();

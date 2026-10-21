@@ -205,22 +205,22 @@ button, input, textarea { font: inherit; color: inherit; }
 /* pie: quiénes somos, con subrayado de marcador que se pinta al llegar */
 .colophon {
   max-width: var(--col);
-  margin: 7rem auto 0;
+  margin: 5rem auto 0;
   padding: 0 var(--gutter);
   text-align: center;
 }
 .colophon p {
   margin: 0;
-  font-size: clamp(1.7rem, 4.6vw, 3.4rem);
-  font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0;
   text-transform: uppercase;
   text-wrap: balance;
 }
 .colophon a { text-decoration: none; color: inherit; }
 .colophon .mark {
-  padding: 0 0.12em;
+  padding: 0.1em 0.3em;
   background-image: linear-gradient(var(--blue), var(--blue));
   background-repeat: no-repeat;
   background-size: 0% 100%;
