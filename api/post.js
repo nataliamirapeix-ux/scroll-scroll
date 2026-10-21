@@ -1,4 +1,5 @@
 import { db, json, text, fail, onlyPost, requirePassword, AUTHORS, KINDS } from '../lib/common.js';
+import { unfurl } from '../lib/unfurl.js';
 
 const MAX_BODY = 20000;
 
@@ -20,6 +21,9 @@ export default async function handler(req, res) {
   }
 
   try {
+    let cleanMeta = meta && typeof meta === 'object' ? meta : {};
+    // Un enlace: se visita la página para quedarse con su título e imagen
+    if (kind === 'link') cleanMeta = { ...cleanMeta, ...(await unfurl(cleanUrl)) };
     const { data, error } = await db()
       .from('posts')
       .insert({
@@ -27,7 +31,7 @@ export default async function handler(req, res) {
         kind,
         body: cleanBody || null,
         url: kind === 'text' ? null : cleanUrl,
-        meta: meta && typeof meta === 'object' ? meta : {},
+        meta: cleanMeta,
       })
       .select('id, created_at, author, kind, body, url, meta')
       .single();
