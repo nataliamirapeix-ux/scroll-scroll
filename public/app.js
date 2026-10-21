@@ -129,7 +129,8 @@
       art.appendChild(p);
     } else if (item.kind === 'link') {
       const e = embedFor(item.url);
-      art.appendChild(media(e, item.url));
+      if (!e) art.classList.add('card');
+      art.appendChild(media(e, item.url, item.meta));
       if (item.body) { const c = el('p', 'caption'); c.appendChild(linkify(item.body)); art.appendChild(c); }
     } else {
       const e = { kind: item.kind === 'image' ? 'img' : item.kind, src: item.url };
@@ -138,15 +139,28 @@
     }
     return art;
   }
-  function media(e, url) {
-    if (!e) {
-      const a = el('a', 'linkcard');
-      a.href = url; a.target = '_blank'; a.rel = 'noopener';
-      let host = url; try { host = new URL(url).hostname.replace(/^www\./, ''); } catch {}
-      a.appendChild(el('span', 'host', host));
-      a.appendChild(el('span', 'href', url.replace(/^https?:\/\/(www\.)?/, '')));
-      return a;
+  // enlace sin embed (noticia, artículo, wikipedia): imagen y título del propio medio, y un botón LINK
+  function linkCard(url, meta) {
+    const card = el('div', 'linkcard');
+    let host = url; try { host = new URL(url).hostname.replace(/^www\./, ''); } catch {}
+    if (meta.image) {
+      const a = el('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener';
+      const i = el('img'); i.src = meta.image; i.loading = 'lazy'; i.alt = ''; i.referrerPolicy = 'no-referrer';
+      i.addEventListener('load', () => { if (i.naturalWidth > i.naturalHeight * 1.15) i.classList.add('wide'); }, { once: true });
+      i.addEventListener('error', () => a.remove(), { once: true });
+      a.appendChild(i); card.appendChild(a);
     }
+    const t = el('a', 'title', meta.title || url.replace(/^https?:\/\/(www\.)?/, ''));
+    t.href = url; t.target = '_blank'; t.rel = 'noopener';
+    card.appendChild(t);
+    card.appendChild(el('p', 'host tiny', meta.site ? `${meta.site} · ${host}` : host));
+    const b = el('a', 'linkbtn', 'link');
+    b.href = url; b.target = '_blank'; b.rel = 'noopener';
+    card.appendChild(b);
+    return card;
+  }
+  function media(e, url, meta) {
+    if (!e) return linkCard(url, meta || {});
     // las imágenes verticales van en columna estrecha; las apaisadas ocupan la columna entera
     if (e.kind === 'img') {
       const i = el('img'); i.src = e.src; i.loading = 'lazy'; i.alt = '';
@@ -347,7 +361,7 @@
   }
 
   /* ---------- demo ---------- */
-  const DEMO_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9b6ae"/><stop offset="1" stop-color="#6e6a63"/></linearGradient></defs><rect width="600" height="800" fill="url(#g)"/><rect x="150" y="220" width="300" height="360" fill="#e8e6e1" opacity=".85"/></svg>');
+  const DEMO_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9b6ae"/><stop offset="1" stop-color="#6e6a63"/></linearGradient></defs><rect width="600" height="800" fill="url(#g)"/><rect x="150" y="220" width="300" height="360" fill="#e8e6e1" opacity=".85"/></svg>');
   const DEMO = [
     { id: 'd0', kind: 'text', author: 'daniel', created_at: '2026-10-21T18:10:00Z', body: 'ruido con forma' },
     { id: 'd1', kind: 'text', author: 'natalia', created_at: '2026-10-21T17:04:00Z', body: 'lo que no se escribe no existe, pero lo que se escribe tampoco' },
@@ -356,7 +370,8 @@
     { id: 'd3', kind: 'text', author: 'daniel', created_at: '2026-10-20T22:15:00Z', body: 'el scroll es un paisaje que se mueve para que tú no tengas que moverte' },
     { id: 'd4', kind: 'link', author: 'natalia', created_at: '2026-10-20T09:31:00Z', url: 'https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT' },
     { id: 'd5', kind: 'text', author: 'natalia', created_at: '2026-10-19T19:00:00Z', body: 'Apuntar aquí todo lo que no cabe en ningún sitio. Un cajón de sastre entre dos personas donde las cosas se acumulan sin orden y sin explicación, y donde el único criterio es que a uno de los dos le ha parecido que merecía quedarse. Esto es un ejemplo de texto largo para ver cómo se comporta la tipografía cuando hay más de un párrafo.\n\nSegundo párrafo, para probar.' },
-    { id: 'd6', kind: 'link', author: 'daniel', created_at: '2026-10-18T16:42:00Z', url: 'https://www.are.na/natalia/scroll-scroll' },
+    { id: 'd6', kind: 'link', author: 'daniel', created_at: '2026-10-18T16:42:00Z', url: 'https://laperdizroja.com/lo-primero-mujer-lo-segundo-de-pueblo-lo-tercero-rebelde/', meta: { unfurled: true, title: 'Lo primero mujer, lo segundo de pueblo, lo tercero rebelde: historia de la fotógrafa defensora y emblema de la montaña palentina, Piedad Isla', image: DEMO_IMG, site: 'La Perdiz Roja' } },
+    { id: 'd7', kind: 'link', author: 'natalia', created_at: '2026-10-18T10:00:00Z', url: 'https://es.wikipedia.org/wiki/Simulacro' },
   ];
 
   // favicon: cuadrado negro que se llena de azul con el mismo guion nervioso que el logo (9 s por ciclo)
