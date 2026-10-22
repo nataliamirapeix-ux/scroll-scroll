@@ -352,6 +352,7 @@ body:has(.about[open]) .corner { visibility: hidden; }
   color: #ffffff;
   padding: 0 0.18em;
   text-decoration: none;
+  text-transform: uppercase;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
