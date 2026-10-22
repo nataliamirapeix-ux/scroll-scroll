@@ -445,6 +445,12 @@
     }, 100);
   })();
 
+  // pop up "en profundidad": se abre con el botón del pie, se cierra con la X, con Esc o pinchando fuera
+  const about = $('about');
+  $('aboutopen').addEventListener('click', () => about.showModal());
+  $('aboutclose').addEventListener('click', () => about.close());
+  about.addEventListener('click', (e) => { if (e.target === about) about.close(); });
+
   // pie: el subrayado de marcador se dispara cuando el pie entra en pantalla
   const colophon = document.querySelector('.colophon');
   if (colophon) new IntersectionObserver((entries, obs) => {
