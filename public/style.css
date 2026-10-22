@@ -345,14 +345,7 @@ body:has(.about[open]) .corner { visibility: hidden; }
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-.about p.punch {
-  margin-top: 2.2rem;
-  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  text-transform: uppercase;
-}
+.about p.punch { margin-top: 2rem; }
 .about .sign { margin: 2.2rem auto 0; font-weight: 600; }
 .about .hi {
   background: var(--blue);
