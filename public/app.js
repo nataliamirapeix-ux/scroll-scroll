@@ -4,10 +4,12 @@
   const MAX_FILE = 50 * 1024 * 1024; // límite del plan gratuito de Supabase
   const AUTHORS = ['natalia', 'daniel', 'natalia&daniel'];
   // La frase que se repite en los márgenes. Cambiadla por la que queráis.
-  const TAGLINE = 'Un medio para derrochar ideas. Nos lo podemos permitir.';
+  const TAGLINE = ['Un medio para derrochar ideas.', 'Nos lo podemos permitir.']; // una línea por frase
 
   const $ = (id) => document.getElementById(id);
-  for (const n of document.querySelectorAll('[data-tagline]')) n.textContent = TAGLINE;
+  for (const n of document.querySelectorAll('[data-tagline]')) {
+    n.replaceChildren(...TAGLINE.flatMap((t, i) => i ? [document.createElement('br'), t] : [t]));
+  }
   const feed = $('feed');
   const sentinel = $('sentinel');
   const composer = $('composer');

@@ -104,10 +104,20 @@ button, input, textarea { font: inherit; color: inherit; }
 .corner.tr { top: 0.9rem; right: var(--gutter); text-align: right; white-space: nowrap; }
 .corner.tr .caret { display: inline-block; width: 0.55em; border-bottom: 1.5px solid var(--ink); vertical-align: baseline; margin-left: 0.1em; animation: caret-blink 1s steps(1, end) infinite; }
 @keyframes caret-blink { 50% { opacity: 0; } }
-.corner.ml { top: 50%; left: var(--gutter); transform: translateY(-50%); }
-.corner.mr { top: 50%; right: var(--gutter); transform: translateY(-50%); text-align: right; }
+.corner.ml { top: 50%; left: var(--gutter); transform: translateY(-50%); max-width: none; white-space: nowrap; }
+.corner.mr { top: 50%; right: var(--gutter); transform: translateY(-50%); max-width: none; white-space: nowrap; text-align: right; }
+/* en pantallas estrechas la frase va en vertical pegada al borde izquierdo, leyéndose de abajo arriba */
 @media (max-width: 60rem) {
-  .corner.ml, .corner.mr { display: none; }
+  .corner.mr { display: none; }
+  .corner.ml {
+    left: 0.45rem;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    text-align: left;
+    line-height: 1.25;
+  }
+  .feed, .colophon { padding-left: 2.4rem; }
+  .corner.tl { font-size: 1.25rem; top: 0.8rem; }
 }
 
 /* feed */
