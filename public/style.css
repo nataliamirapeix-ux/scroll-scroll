@@ -293,7 +293,6 @@ button, input, textarea { font: inherit; color: inherit; }
   line-height: 1.7;
   letter-spacing: 0;
   text-transform: uppercase;
-  text-wrap: balance;
 }
 .colophon a { text-decoration: none; color: inherit; }
 .colophon .mark {
@@ -307,9 +306,8 @@ button, input, textarea { font: inherit; color: inherit; }
   transition: background-size 650ms cubic-bezier(0.2, 0.8, 0.2, 1), color 300ms;
 }
 .colophon.lit .mark { background-size: 100% 100%; color: #ffffff; }
-.colophon.lit .mark:nth-child(2) { transition-delay: 350ms; }
-.colophon.lit .mark:nth-child(3) { transition-delay: 700ms; }
-.colophon.lit .mark:nth-child(4) { transition-delay: 1500ms; }
+.colophon.lit .mark:nth-child(4) { transition-delay: 600ms; }
+.colophon p a:not(.mark):hover { text-decoration: underline; text-decoration-thickness: 0.08em; text-underline-offset: 0.15em; text-decoration-color: var(--blue); }
 .colophon a.mark:hover, .colophon a.mark:focus-visible { background-image: linear-gradient(var(--ink), var(--ink)); color: var(--bg); outline: none; }
 
 /* botón del pie y pop up "en profundidad" */
