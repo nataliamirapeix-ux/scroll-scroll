@@ -450,6 +450,8 @@
   $('aboutopen').addEventListener('click', () => about.showModal());
   $('aboutclose').addEventListener('click', () => about.close());
   about.addEventListener('click', (e) => { if (e.target === about) about.close(); });
+  // SCROLL-SCROLL dentro del about: cierra la ventana y vuelve arriba en vez de recargar
+  about.querySelectorAll('a.home').forEach((l) => l.addEventListener('click', (e) => { e.preventDefault(); about.close(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
 
   // pie: el subrayado de marcador se dispara cuando el pie entra en pantalla
   const colophon = document.querySelector('.colophon');
