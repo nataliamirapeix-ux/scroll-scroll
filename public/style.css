@@ -357,25 +357,17 @@ body:has(.about[open]) .corner { visibility: hidden; }
   box-decoration-break: clone;
 }
 .about a.hi:hover, .about a.hi:focus-visible { background: var(--ink); color: var(--bg); outline: none; }
-/* CONTRÁTANOS: bloque azul a lo bestia; al pasar, se invierte a tinta */
+/* CONTRÁTANOS: mismo botón que "saber más" del pie */
 .about .hire {
   display: inline-block;
-  margin-top: 2.4rem;
-  padding: 0.35em 0.6em 0.3em;
-  background: var(--blue);
-  color: #ffffff;
-  font-size: clamp(2.2rem, 7vw, 4.2rem);
-  font-weight: 900;
-  font-stretch: 112%;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
+  margin-top: 1.6rem;
+  padding: 0.55rem 0.9rem;
+  background: none;
+  border: 1px solid var(--ink);
+  color: var(--ink);
   text-decoration: none;
-  transition: background 160ms, color 160ms, transform 160ms;
 }
-.about .hire:hover, .about .hire:focus-visible { background: var(--ink); color: var(--bg); outline: none; transform: rotate(-1.5deg) scale(1.03); }
-.about .hire:active { transform: rotate(-1.5deg) scale(0.98); }
-.about .sign + .hire { margin-top: 1.6rem; }
+.about .hire:hover, .about .hire:focus-visible { background: var(--ink); color: var(--bg); outline: none; }
 .about-close {
   position: sticky;
   top: 0.6rem;
