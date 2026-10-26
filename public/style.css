@@ -320,6 +320,17 @@ button, input, textarea { font: inherit; color: inherit; }
   cursor: pointer;
 }
 .colophon .deep:hover, .colophon .deep:focus-visible { background: var(--ink); color: var(--bg); outline: none; }
+/* "saber más" siempre a mano: fijo abajo a la derecha, por encima de la caja de subir si está abierta */
+.colophon .deep {
+  position: fixed;
+  right: var(--gutter);
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  margin: 0;
+  z-index: 4;
+  background: var(--bg);
+}
+body.can-post .colophon .deep { bottom: calc(var(--composer) + env(safe-area-inset-bottom) + 0.8rem); }
+body:has(.about[open]) .colophon .deep { visibility: hidden; }
 .about {
   border: 0;
   border-radius: 0;
